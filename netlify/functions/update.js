@@ -11,6 +11,12 @@ exports.handler = async (event) => {
   try {
     const { message } = JSON.parse(event.body);
 
+    if (!message || !message.text) {
+      // Обработка случая, когда поле 'text' отсутствует
+      await sendMessage(message.chat.id, "Неверный формат сообщения");
+      return { statusCode: 400 }; // Возвращаем статус код 400 для указания ошибки клиента
+    }
+
     if (message.text.startsWith("/start")) {
       // Обработка команды /start и отправка приветственного сообщения
       await sendWelcomeMessage(message.chat.id);
