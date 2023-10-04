@@ -17,19 +17,15 @@ exports.handler = async (event) => {
     } else if (message.text.startsWith("/notion")) {
       // Обработка команды /notion и запись данных в Notion
       const params = message.text.split(" ");
-      if (params.length === 5) {
-        const [, username, name, status, date] = params;
-        await addToDatabase(
-          databaseId,
-          username,
-          name,
-          status === "true",
-          date
-        );
+      if (params.length === 2) {
+        const [, username] = params;
+        const name = message.from.first_name; // Имя пользователя из Telegram
+        const currentDate = new Date().toISOString().split("T")[0]; // Текущая дата в формате "гггг-мм-дд"
+        await addToDatabase(databaseId, username, name, true, currentDate);
       } else {
         await sendMessage(
           message.chat.id,
-          "Неверное количество параметров. Используйте /notion username name status date"
+          "Неверное количество параметров. Используйте /notion username"
         );
       }
     } else {
