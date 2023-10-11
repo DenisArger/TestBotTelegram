@@ -1,7 +1,6 @@
 const sendMessage = require("../../sendMessage");
 const { Client } = require("@notionhq/client");
-const { Markup } = require("node-telegram-bot-api");
-const notionApiKey = process.env.NOTION_API_KEY;
+const { Extra } = require("node-telegram-bot-api"); // Updated importconst notionApiKey = process.env.NOTION_API_KEY;
 const databaseId = process.env.NOTION_DATABASE_ID;
 
 // Инициализация клиента Notion API
@@ -49,17 +48,20 @@ exports.handler = async (event) => {
     };
   }
 };
+
 async function sendWelcomeMessage(chat_id) {
   try {
     const welcomeText = "Добро пожаловать! Я ваш бот. Как я могу вам помочь?";
 
-    // Создаем кнопку "Отправить данные в Notion"
-    const keyboard = Markup.inlineKeyboard([
-      Markup.callbackButton("Отправить данные в Notion", "notion"),
-    ]);
+    // Create inline keyboard "Отправить данные в Notion"
+    const keyboard = Extra.markup((markup) =>
+      markup.inlineKeyboard([
+        markup.callbackButton("Отправить данные в Notion", "notion"),
+      ])
+    );
 
-    // Отправка приветственного сообщения с кнопкой
-    await sendMessage(chat_id, welcomeText, { reply_markup: keyboard });
+    // Send the welcome message with the keyboard
+    await sendMessage(chat_id, welcomeText, keyboard);
   } catch (error) {
     console.error("Error sending welcome message:", error);
     throw error;
