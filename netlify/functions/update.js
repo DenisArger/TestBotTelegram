@@ -25,7 +25,7 @@ exports.handler = async (event) => {
       const params = message.text.split(" ");
       if (params.length === 2) {
         const [, username] = params;
-        const name = message.from.first_name; // Имя пользователя из Telegram
+        const name = `${message.from.first_name}${message.from.last_name}`; // Имя пользователя из Telegram
         const currentDate = new Date().toISOString().split("T")[0]; // Текущая дата в формате "гггг-мм-дд"
         await addToDatabase(databaseId, username, name, true, currentDate);
       } else {
