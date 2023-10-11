@@ -28,6 +28,7 @@ exports.handler = async (event) => {
         const name = `${message.from.first_name}${message.from.last_name}`; // Имя пользователя из Telegram
         const currentDate = new Date().toISOString().split("T")[0]; // Текущая дата в формате "гггг-мм-дд"
         await addToDatabase(databaseId, username, name, true, currentDate);
+        await sendMessage(message.chat.id, "Данные успешно записаны");
       } else {
         await sendMessage(
           message.chat.id,
