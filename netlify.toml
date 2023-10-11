@@ -1,2 +1,6 @@
 [template.environment]
   BOT_TOKEN = "6349929159:AAE5P3CsUFxJIL2cFQrdDFTcdJRRhsK0Iuk"
+  NOTION_API_KEY = "secret_6tBKWw07HCQWOVVb6Ix1frFdh36uqWdrlXpvg9UCapX"
+  NOTION_DATABASE_ID = "af1c2b4ae899446fba53b8cfcb50cd63"
+
+
