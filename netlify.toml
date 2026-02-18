@@ -1,0 +1,4 @@
+[template.environment]
+  BOT_TOKEN = "replace_me"
+  NOTION_API_KEY = "replace_me"
+  NOTION_DATABASE_ID = "replace_me"
