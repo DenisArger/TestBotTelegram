@@ -1,66 +1,85 @@
-﻿# TestBotTelegram
+# TestBotTelegram
 
-Минимальный модуль для отправки сообщений в Telegram Bot API через HTTPS. В текущей версии это одна функция `sendMessage`, которую можно подключать в любые скрипты/боты. Проект ориентирован на быстрые интеграции и расширение под ваши сценарии (например, уведомления, алерты, интеграции с Notion и т.п.).
+## English
 
-## Что делает проект
+## Problem
+Projects often need a reusable utility for sending Telegram notifications from scripts and lightweight services.
 
-- Отправляет текстовые сообщения в чат Telegram по `chat_id`.
-- Использует официальный Telegram Bot API.
-- Работает через `axios` (HTTP клиент).
-- Готов к расширению дополнительными командами/методами Bot API.
+## Solution
+`TestBotTelegram` provides a simple `sendMessage` module that posts messages to Telegram Bot API with minimal setup.
 
-## Стек
+## Tech Stack
+- Node.js
+- JavaScript (CommonJS)
+- Axios
+- Telegram Bot API
 
-- Node.js (CommonJS)
-- `axios` для HTTP
-- `@notionhq/client` подключён как зависимость для будущих интеграций
+## Architecture
+Top-level structure:
+```text
+sendMessage.js
+package.json
+netlify/
+netlify.toml
+```
 
-## Структура
+```mermaid
+flowchart TD
+  A[App Script] --> B[sendMessage.js]
+  B --> C[HTTPS POST]
+  C --> D[Telegram Bot API sendMessage]
+```
 
-- `sendMessage.js` — экспортируемая функция отправки сообщений
-- `package.json` — зависимости и метаданные
+## Features
+- Send text messages to Telegram chats
+- Tiny reusable module for other projects
+- Uses `BOT_TOKEN` from environment
 
-## Быстрый старт
-
-1. Установите зависимости:
-
+## How to Run
 ```bash
 npm install
+cp .env.example .env
+node -e "const send=require('./sendMessage'); send(123456789,'Hello from TestBotTelegram')"
 ```
 
-2. Укажите токен бота в окружении:
+## Русский
 
+## Проблема
+Во многих проектах нужен переиспользуемый модуль для отправки Telegram-уведомлений из скриптов и легковесных сервисов.
+
+## Решение
+`TestBotTelegram` предоставляет простую функцию `sendMessage`, которая отправляет сообщения в Telegram Bot API с минимальной настройкой.
+
+## Стек
+- Node.js
+- JavaScript (CommonJS)
+- Axios
+- Telegram Bot API
+
+## Архитектура
+Верхнеуровневая структура:
+```text
+sendMessage.js
+package.json
+netlify/
+netlify.toml
+```
+
+```mermaid
+flowchart TD
+  A[Скрипт приложения] --> B[sendMessage.js]
+  B --> C[HTTPS POST]
+  C --> D[Telegram Bot API sendMessage]
+```
+
+## Возможности
+- Отправка текстовых сообщений в Telegram-чаты
+- Минимальный модуль для повторного использования
+- Использование `BOT_TOKEN` из окружения
+
+## Как запустить
 ```bash
-# Windows PowerShell
-$env:BOT_TOKEN = "<ваш_токен>"
+npm install
+cp .env.example .env
+node -e "const send=require('./sendMessage'); send(123456789,'Hello from TestBotTelegram')"
 ```
-
-3. Пример использования:
-
-```js
-const sendMessage = require('./sendMessage');
-
-(async () => {
-  await sendMessage(123456789, 'Привет из TestBotTelegram!');
-})();
-```
-
-## Переменные окружения
-
-- `BOT_TOKEN` — токен Telegram-бота (обязательно).
-
-## Поведение и ошибки
-
-- Функция `sendMessage(chat_id, text)` делает POST запрос на Telegram Bot API.
-- При ошибке запроса будет выброшено исключение `axios`. Обработайте его снаружи `try/catch` при необходимости.
-
-## Идеи для расширения
-
-- Добавить поддержку `parse_mode`, `disable_web_page_preview`.
-- Добавить отправку изображений/файлов (`sendPhoto`, `sendDocument`).
-- Добавить логирование и retries.
-- Подключить Notion API для нотификаций из базы.
-
-## Лицензия
-
-ISC
